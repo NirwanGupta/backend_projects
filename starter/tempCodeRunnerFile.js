@@ -6,7 +6,6 @@ const connectDB = require(`./db/connect`);
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
-app.use(express.json());
 const notFound = require(`./middleware/not-found`);
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
@@ -15,6 +14,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 // app.use(express.static(`./public`));
+app.use(express.json());
 
 // app.use(express.static('./public'));
 // app.use(`/api/v1/tasks`, tasks);
@@ -40,39 +40,3 @@ const start = async () => {
 
 //  Calling the start function
 start();
-
-
-// const express = require('express');
-// const app=express();
-// const tasks = require('./routes/tasks');
-// const {connectDB} = require('./db/connect');
-// require('dotenv').config();
-// const {notFound}=require('./middleware/not-found');
-// const {errorHandlerMiddleware} = require('./middleware/error-handler');
-// const port=5000;
-
-// //parse json
-// app.use(express.json());
-
-// app.use(express.static('./public'));
-
-// //routes
-// app.use('/api/v1/tasks',tasks);
-
-// app.use(notFound);
-// app.use(errorHandlerMiddleware);
-
-// // console.log(process.env.MONGO_URI); //-> only defined inside the starter folder
-// const start = async()=>{
-//     try {
-//         await connectDB(process.env.MONGO_URI);
-//         console.log("Connected to database");
-//         app.listen(port,()=>{
-//             console.log(`Server is listening to port ${port}...`);
-//         })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// start();

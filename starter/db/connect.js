@@ -13,7 +13,6 @@ const dataBaseName = "03-TASK-MANAGER";
 
 // const connectionstring = `mongodb+srv://${userName}:${encodedPassword}@nodeexpressprojects.ehksps5.mongodb.net/${dataBaseName}?retryWrites=true&w=majority`;
 
-"mongodb+srv://guptanirwan:pV8DomUxmOc8iyMy@nodeexpressprojects.ehksps5.mongodb.net/03-TASK-MANAGER?retryWrites=true&w=majority"
 
 mongoose.set(`strictQuery`, true);
 
