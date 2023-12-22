@@ -5,7 +5,7 @@
 //  setup authentication so only the request with JWT can access the dashBoard
 
 const jwt = require(`jsonwebtoken`);
-const CustomAPIError = require(`../errors/custom-error`);
+const {BadRequestError} = require(`../errors`);
 
 const login = async (req, res) => {
     const {username, password} = req.body;
@@ -17,7 +17,7 @@ const login = async (req, res) => {
     //  check in the controllers itself
 
     if(!username || !password) {
-        throw new CustomAPIError(`Please provide email and password`, 400);
+        throw new BadRequestError(`Please provide email and password`);
     }
 
     //  A JWT web token has 3 parts: header, payload, and signature
@@ -41,7 +41,7 @@ const login = async (req, res) => {
 
     const id = new Date().getDate();        //  just to generate an ID
     
-    // const token = jwt.sign({payload}, {secret in .env file}, {lifeTime})
+    // const token = jwt.sign({payload}, {enviornment variable in .env file}, {lifeTime})
     const token = jwt.sign({id, username}, process.env.JWT_SECRET, {expiresIn: '30d'});
 
     //  in frontend it is very important to do      Authorization: `Bearer`${token}
@@ -49,6 +49,8 @@ const login = async (req, res) => {
     res.status(200).json({msg: `User created`, token});
 }
 
+//      this one is when i dont use a middleware for the authentication
+/*
 const dashBoard = async (req, res) => {
     //  now once we have successfully generated a token, now we want to extract the username from it and use it to send the secret data
 
@@ -76,6 +78,15 @@ const dashBoard = async (req, res) => {
         throw new CustomAPIError(`Not authorized to access this route`, 401);
     }
 
+}
+*/
+
+//  if i use a middleware for the authentication
+//  the middleware puts the id and username in the req.user
+const dashBoard = async (req, res) => {
+    console.log(req.user);
+    const luckyNumber = Math.floor(Math.random()*100);
+    res.status(200).json({msg: `Hello ${req.user.username} `, secret: `Here is your authorized data, your lucky number is ${luckyNumber}`});
 }
 
 module.exports = {
