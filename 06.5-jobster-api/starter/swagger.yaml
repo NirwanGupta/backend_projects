@@ -4,13 +4,13 @@ info:
   contact: {}
   version: '1.0'
 servers:
-- url: https://jobs-api-project-l3d9.onrender.com/api/v1
-  variables: {}
+  - url: https://jobs-api-06.herokuapp.com/api/v1
+    variables: {}
 paths:
   /auth/register:
     post:
       tags:
-      - Auth
+        - Auth
       summary: Register User
       operationId: RegisterUser
       parameters: []
@@ -19,16 +19,11 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/RegisterUserRequest'
-              - example:
-                  name: Nirwan Gupta
-                  email: guptanirwan@gmail.com
-                  password: '7889607295'
+              $ref: '#/components/schemas/RegisterUserRequest'
             example:
-              name: Nirwan Gupta
-              email: guptanirwan@gmail.com
-              password: '7889607295'
+              name: bob
+              email: bob@gmail.com
+              password: secret
         required: true
       responses:
         '200':
@@ -39,7 +34,7 @@ paths:
   /auth/login:
     post:
       tags:
-      - Auth
+        - Auth
       summary: Login User
       operationId: LoginUser
       parameters: []
@@ -48,14 +43,10 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/LoginUserRequest'
-              - example:
-                  email: guptanirwan4@gmail.com
-                  password: '7889607295'
+              $ref: '#/components/schemas/LoginUserRequest'
             example:
-              email: guptanirwan4@gmail.com
-              password: '7889607295'
+              email: susan@gmail.com
+              password: secret
         required: true
       responses:
         '200':
@@ -66,7 +57,7 @@ paths:
   /jobs:
     post:
       tags:
-      - Jobs
+        - Jobs
       summary: Create Job
       operationId: CreateJob
       parameters: []
@@ -75,25 +66,19 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/CreateJobRequest'
-              - example:
-                  company: Microsoft
-                  position: back-end developer
+              $ref: '#/components/schemas/CreateJobRequest'
             example:
-              company: Microsoft
-              position: back-end developer
+              company: google
+              position: front-end developer
         required: true
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-      security:
-      - bearer: []
     get:
       tags:
-      - Jobs
+        - Jobs
       summary: Get All Jobs
       operationId: GetAllJobs
       parameters: []
@@ -102,8 +87,6 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security:
-      - bearer: []
   /jobs/{id}:
     parameters:
       - in: path
@@ -114,20 +97,19 @@ paths:
         description: The job ID
     get:
       tags:
-      - Jobs
-      summary: Get Job
-      operationId: GetJob
+        - Jobs
+      summary: Get Single Job
+      operationId: GetSingleJob
       parameters: []
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-      security:
-      - bearer: []
+
     patch:
       tags:
-      - Jobs
+        - Jobs
       summary: Update Job
       operationId: UpdateJob
       parameters: []
@@ -136,25 +118,19 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/UpdateJobRequest'
-              - example:
-                  company: Lenovo
-                  position: Full-Stack Developer
+              $ref: '#/components/schemas/UpdateJobRequest'
             example:
-              company: Lenovo
-              position: Full-Stack Developer
+              company: random
+              position: intern
         required: true
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-      security:
-      - bearer: []
     delete:
       tags:
-      - Jobs
+        - Jobs
       summary: Delete Job
       operationId: DeleteJob
       parameters: []
@@ -163,16 +139,14 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security:
-      - bearer: []
 components:
   schemas:
     RegisterUserRequest:
       title: RegisterUserRequest
       required:
-      - name
-      - email
-      - password
+        - name
+        - email
+        - password
       type: object
       properties:
         name:
@@ -182,14 +156,14 @@ components:
         password:
           type: string
       example:
-        name: Nirwan Gupta
-        email: guptanirwan@gmail.com
-        password: '7889607295'
+        name: bob
+        email: bob@gmail.com
+        password: secret
     LoginUserRequest:
       title: LoginUserRequest
       required:
-      - email
-      - password
+        - email
+        - password
       type: object
       properties:
         email:
@@ -197,13 +171,13 @@ components:
         password:
           type: string
       example:
-        email: guptanirwan4@gmail.com
-        password: '7889607295'
+        email: susan@gmail.com
+        password: secret
     CreateJobRequest:
       title: CreateJobRequest
       required:
-      - company
-      - position
+        - company
+        - position
       type: object
       properties:
         company:
@@ -211,13 +185,13 @@ components:
         position:
           type: string
       example:
-        company: Microsoft
-        position: back-end developer
+        company: google
+        position: front-end developer
     UpdateJobRequest:
       title: UpdateJobRequest
       required:
-      - company
-      - position
+        - company
+        - position
       type: object
       properties:
         company:
@@ -225,15 +199,16 @@ components:
         position:
           type: string
       example:
-        company: Lenovo
-        position: Full-Stack Developer
+        company: random
+        position: intern
   securitySchemes:
-    bearer:
+    httpBearer:
       type: http
       scheme: bearer
-security: []
+security:
+  - httpBearer: []
 tags:
-- name: Auth
-  description: ''
-- name: Jobs
-  description: ''
+  - name: Auth
+    description: ''
+  - name: Jobs
+    description: ''
