@@ -23,9 +23,24 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide password'],
     minlength: 6,
   },
+  lastName: {
+    type: String,
+    trim: true,
+    maxlength: 20,
+    default: "Last Name",
+  },
+  location: {
+    type: String,
+    trim: true,
+    maxlength: 20,
+    default: "My city",
+  },
 })
 
 UserSchema.pre('save', async function () {
+  // console.log(this.modifiedPaths());   // modified paths allows us to see what field did us change while updating the user info
+  //  isModified() is used to check if a specific field was modified
+  if(!this.isModified(`password`))  return; //if i did not modify the password then return
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
