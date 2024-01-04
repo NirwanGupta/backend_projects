@@ -4,6 +4,18 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 
+const fileUpload = require(`express-fileupload`);
+
+
+//  we use cloudinary because for the user that are far off from our server, it takes more tiome to send files from our server to them, thus we use a server cloudinary that stores the image files, and alse these servers are present near the user place
+//  use v2
+const cloudinary = require(`cloudinary`).v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 // database
 const connectDB = require('./db/connect');
 
@@ -13,7 +25,9 @@ const productRouter = require(`./routes/productRoutes`);
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-app.use(express.json);
+app.use(express.static(`./public`));
+app.use(express.json());
+app.use(fileUpload({useTempFiles: true}));
 
 app.get('/', (req, res) => {
   res.send('<h1>File Upload Starter</h1>');
