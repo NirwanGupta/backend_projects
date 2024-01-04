@@ -5,15 +5,16 @@ const { UnauthenticatedError } = require('../errors')
 const auth = async (req, res, next) => {
   // check header
   const authHeader = req.headers.authorization
-  if (!authHeader || !authHeader.startsWith('Bearer')) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     throw new UnauthenticatedError('Authentication invalid')
   }
   const token = authHeader.split(' ')[1]
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET)
+    const testUser = payload.userId === '658ff9eeba9b73bf5f5613b4'; //  because i want to limit the crud activities that the test user can perform, READonly
     // attach the user to the job routes
-    req.user = { userId: payload.userId, name: payload.name }
+    req.user = { userId: payload.userId, testUser }
     next()
   } catch (error) {
     throw new UnauthenticatedError('Authentication invalid')

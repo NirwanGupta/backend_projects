@@ -1,0 +1,10 @@
+const BadRequestError = require(`../errors/bad-request`);
+
+const testUser = async(req, res, next) => {
+    if(req.user.testUser) {
+        throw new BadRequestError(`Test User-READ only`);
+    }
+    next();
+}
+
+module.exports = testUser;
