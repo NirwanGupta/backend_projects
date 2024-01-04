@@ -39,7 +39,7 @@ const updateJob = async (req, res) => {
         params: {id: jobId},
     } = req;
 
-    if(company === '' || position === '') {
+    if(company === '' || position === '') { //  if i donot do this here, still there will be no updation because i have runValidators true while findoneandupdate
         throw new BadRequestError(`Company or position fields cannot be empty`);
     }
 

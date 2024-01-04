@@ -22,8 +22,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customError.statusCode = 404;
   }
 
-  if(err.code && err.code == 11000) { //  the mongoose error for duplicate email has a property named code that is set to 11000
-    customError.msg - `Duplicate value entered for ${Object.keys(err.keyValue)} field, please choose another value`; //  the keyValue property has the field that has duplicate value, here email
+  if(err.code && err.code === 11000) { //  the mongoose error for duplicate email has a property named code that is set to 11000
+    customError.msg = `Duplicate value entered for ${Object.keys(err.keyValue)} field, please choose another value`; //  the keyValue property has the field that has duplicate value, here email
     // err.keyValue was found to be Object.object on the postman, using a bit javascript use ${Object.keys()}
     customError.statusCode = 400;
   }

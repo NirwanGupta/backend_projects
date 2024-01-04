@@ -112,7 +112,7 @@ const deleteJob = async (req, res) => {
 const showStats = async (req, res) => {
   let stats = await Job.aggregate([
     { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
-    { $group: { _id: '$status', count: { $sum: 1 } } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },   //  1 here represents that only one amount should be considered while taking in status
   ]);
 
   //  because frontend is expecting data in certain format
@@ -120,7 +120,7 @@ const showStats = async (req, res) => {
     const {_id: title, count} = curr;
     acc[title] = count;
     return acc;
-  }, {});
+  }, {}); //Second argument tells about the return type
 
   //  for backend check for no jobs-> return 0
   const defaultStats = {

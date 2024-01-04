@@ -33,7 +33,7 @@ const register = async (req, res) => {
 
     //  now we are useing the user.js in the models as a middleware and creating the hashpassword and storing it in the password itself
 
-    const user = await User.create({...req.body});
+    const user = await User.create({...req.body});  //  same as User.create(req.body);
 
     //  here we create the token here only, however we can do it in the Schema with the hashpassword by creating a new Schema method(function)
     //  used_id because in the used object we are creating the id is defined in _id, see postman
