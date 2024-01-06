@@ -9,14 +9,22 @@ const morgan = require(`morgan`);
 const connectDB = require(`./db/connect`);
 const authRouter = require(`./router/authRouter`);
 
+const cookieParser = require(`cookie-parser`);  //  this middleware puts the cookie in the req
 const errorHandlerMiddleware = require(`./middleware/error-handler`);
 const notFoundMiddleware = require(`./middleware/not-found`);
 
 app.use(morgan(`tiny`));    //  useful to know at any call that which route we are heading
 app.use(express.json());
+app.use(cookieParser(process.env.JWT_SECRET));
 
 app.get(`/`, (req, res) => {
     res.send(`Home page`);
+})
+
+app.get(`/api/v1`, (req, res) => {
+    // console.log(req.cookies);    //  this works if cookie is not signed
+    console.log(req.signedCookies);     //  this works for signed cookie
+    res.send(`Home page /api/v1`);
 })
 
 app.use(`/api/v1/auth`, authRouter);

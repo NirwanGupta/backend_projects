@@ -1,5 +1,6 @@
 const mongoose = require(`mongoose`);
 const validator = require(`validator`); //  if we use this package we donot need match to validate the email
+const bcrypt = require(`bcryptjs`);
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -21,7 +22,7 @@ const userSchema = new mongoose.Schema({
             validator: validator.isEmail,
             message: `Please provide valid email`,
         },
-        // unique: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -34,5 +35,16 @@ const userSchema = new mongoose.Schema({
         default: 'user',
     },
 });
+
+userSchema.pre(`save`, async function() {
+    if(!this.isModified(`password`))   return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+})
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch;
+}
 
 module.exports = mongoose.model(`User`, userSchema);
