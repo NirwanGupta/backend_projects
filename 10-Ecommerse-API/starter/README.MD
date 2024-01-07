@@ -99,20 +99,20 @@
 
 #### User Routes Structure
 
-- [] add userController file
-- [] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions00 
-- [] res.send('some string value')
-- [] setup userRoutes file
-- [] import all controllers
-- [] setup just one route - router.route('/').get(getAllUsers);
-- [] import userRoutes as userRouter in the app.js
-- [] setup app.use('/api/v1/users', userRouter)
+- [X] add userController file
+- [X] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions00 
+- [X] res.send('some string value')
+- [X] setup userRoutes file
+- [X] import all controllers
+- [X] setup just one route - router.route('/').get(getAllUsers);
+- [X] import userRoutes as userRouter in the app.js
+- [X] setup app.use('/api/v1/users', userRouter)
 
 #### GetAllUsers and GetSingleUser
 
-- [] Get all users where role is 'user' and remove password
-- [] Get Single User where id matches id param and remove password
-- [] If no user 404
+- [X] Get all users where role is 'user' and remove password
+- [X] Get Single User where id matches id param and remove password
+- [X] If no user 404
 
 #### Authenticate User Setup
 
@@ -120,43 +120,43 @@
 
 #### Authorize Permissions Setup
 
-- [] hardcode
+- [X] hardcode
 
 #### Authorize Permissions Complete
 
-- [] introduce params
+- [X] introduce params
 
 #### ShowCurrentUser
 
-- [] get user from req
-- [] send response with user
+- [X] get user from req
+- [X] send response with user
 
 #### UpdateUserPassword
 
-- [] almost identical to login user
-- [] add authenticateUser middleware in the route
-- [] check for oldPassword and newPassword in the body
-- [] if one missing 400
-- [] look for user with req.user.userId
-- [] check if oldPassword matches with user.comparePassword
-- [] if no match 401
-- [] if everything good set user.password equal to newPassword
-- [] await user.save()
+- [X] almost identical to login user
+- [X] add authenticateUser middleware in the route
+- [X] check for oldPassword and newPassword in the body
+- [X] if one missing 400
+- [X] look for user with req.user.userId
+- [X] check if oldPassword matches with user.comparePassword
+- [X] if no match 401
+- [X] if everything good set user.password equal to newPassword
+- [X] await user.save()
 
 #### createTokenUser in Utils
 
-- [] create a file in utils (createTokenUser)
-- [] setup a function that accepts user object and returns userToken object
-- [] export as default
-- [] setup all the correct imports/exports and refactor existing code
+- [X] create a file in utils (createTokenUser)
+- [X] setup a function that accepts user object and returns userToken object
+- [X] export as default
+- [X] setup all the correct imports/exports and refactor existing code
 
 #### updateUser with User.findOneAndUpdate()
 
-- [] add authenticateUser middleware in the route
-- [] check for name and email in the body
-- [] if one is missing, send 400 (optional)
-- [] use findOneAndUpdate()
-- [] create token user, attachCookiesToResponse and send back the tokenUser
+- [X] add authenticateUser middleware in the route
+- [X] check for name and email in the body
+- [X] if one is missing, send 400 (optional)
+- [X] use findOneAndUpdate()
+- [X] create token user, attachCookiesToResponse and send back the tokenUser
 
 #### updateUser with user.save()
 

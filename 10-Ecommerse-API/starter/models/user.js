@@ -36,7 +36,11 @@ const userSchema = new mongoose.Schema({
     },
 });
 
+//  this.isModifiedPaths() returns an array of all the paths that were mofified
+//  this again works only for the case when we use User.save() seperately
 userSchema.pre(`save`, async function() {
+    // console.log("hello");
+    // console.log(this.isModifiedPaths());
     if(!this.isModified(`password`))   return;
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
