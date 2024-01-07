@@ -19,32 +19,41 @@ const register = async (req, res) => {
     const role = isFirstAccount? 'admin': 'user';
 
     const user = await User.create({name, email, password, role});
-    const tokenUser = {name: user.name, id: user._id, role: user.role};
-
-    // const token = jwt.sign(tokenUser, process.env.JWT_SECRET, {expiresIn: process.env.JWT_LIFETIME});    //  this has been now set in the util in jwt.js
-
-//      now all of this is done in jwt.js in utils
-    // const token = createJWT({payload: tokenUser}); 
+    const tokenUser = {name: user.name, userId: user._id, role: user.role};
     
-    //  another way is to send token in cookies
-    // const oneDay = 24*60*60*1000;
-
-    // //  res.cookie(name, value, options)
-    // res.cookie('token', token, {
-    //     httpOnly: true,
-    //     expires: new Date(Date.now() + oneDay),
-    // })
-    
-    attachCookiesToResponse({res, tokenUser});
+    console.log(tokenUser);
+    attachCookiesToResponse({res, user:tokenUser});
     return res.status(StatusCodes.CREATED).json({ user: tokenUser, /*token*/});
 }
 
 const login = async (req, res) => {
-    res.send(`login`);
+    const {email, password} = req.body;
+    if(!email || !password) {
+        throw new customError.BadRequestError(`Please provide email and password`);
+    }
+
+    const user = await User.findOne({ email });
+    if(!user) {
+        throw new customError.UnauthenticatedError(`No user registered with email ${email}`);
+    }
+
+    const isPasswordCorrect = user.comparePassword(password);
+    if(!isPasswordCorrect) {
+        throw new customError.UnauthenticatedError(`Wrong password`);
+    }
+
+    const tokenUser = {name: user.name, userId: user._id, role: user.role};
+    attachCookiesToResponse({res,user : tokenUser});
+
+    res.status(StatusCodes.OK).json({user: tokenUser});
 }
 
 const logout = async (req, res) => {
-    res.send(`logout`);
+    res.cookie(`token`, 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now() /*+ 5*1000*/),
+    })
+    res.status(StatusCodes.OK).json({msg: 'user logged out'});
 }
 
 module.exports = {

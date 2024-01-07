@@ -8,6 +8,7 @@ const morgan = require(`morgan`);
 
 const connectDB = require(`./db/connect`);
 const authRouter = require(`./router/authRouter`);
+const userRouter = require(`./router/userRoutes`);
 
 const cookieParser = require(`cookie-parser`);  //  this middleware puts the cookie in the req
 const errorHandlerMiddleware = require(`./middleware/error-handler`);
@@ -28,6 +29,7 @@ app.get(`/api/v1`, (req, res) => {
 })
 
 app.use(`/api/v1/auth`, authRouter);
+app.use('/api/v1/users', userRouter);
 
 app.use(notFoundMiddleware);    //  if we try to access routes that are not covered we want 404, and once we reach 404, we want all functionality to stop, thus no next() in NotFoiund
 app.use(errorHandlerMiddleware);

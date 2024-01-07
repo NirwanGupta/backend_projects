@@ -77,30 +77,30 @@
 - [X] verify jwt - jwt.verify(token,secret)
 - [X] add variables in .env JWT_SECRET=jwtSecret and JWT_LIFETIME=1d
 - [X] restart the server !!!!
-- [] refactor code, create jwt functions in utils
-- [] refactor cookie code
-- [] setup func attachCookiesToResponse
-- [] accept payload(res, tokenUser)
-- [] create token, setup cookie
-- [] optionally send back the response
+- [X] refactor code, create jwt functions in utils
+- [X] refactor cookie code
+- [X] setup func attachCookiesToResponse
+- [X] accept payload(res, tokenUser)
+- [X] create token, setup cookie
+- [X] optionally send back the response
 
 #### Login Route
 
-- [] check if email and password exist, if one missing return 400
-- [] find user, if no user return 401
-- [] check password, if does not match return 401
-- [] if everything is correct, attach cookie
+- [X] check if email and password exist, if one missing return 400
+- [X] find user, if no user return 401
+- [X] check password, if does not match return 401
+- [X] if everything is correct, attach cookie
   and send back the same response as in register
 
 #### Logout Route
 
-- [] set token cookie equal to some string value
-- [] set expires:new Date(Date.now())
+- [X] set token cookie equal to some string value
+- [X] set expires:new Date(Date.now())
 
 #### User Routes Structure
 
 - [] add userController file
-- [] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions
+- [] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions00 
 - [] res.send('some string value')
 - [] setup userRoutes file
 - [] import all controllers
