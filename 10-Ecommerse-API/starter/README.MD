@@ -164,115 +164,115 @@
 
 #### Product Model
 
-- [] create Product.js in models folder
-- [] create Schema
-- [] name : {type:String}
-- [] price: {type:Number}
-- [] description: {type:String}
-- [] image: {type:String}
-- [] category: {type:String}
-- [] company: {type:String}
-- [] colors: {type:[]}
-- [] featured: {type:Boolean}
-- [] freeShipping: {type:Boolean}
-- [] inventory:{type:Number}
-- [] averageRating:{type:Number}
-- [] user
-- [] set timestamps
-- [] export Product model
+- [X] create Product.js in models folder
+- [X] create Schema
+- [X] name : {type:String}
+- [X] price: {type:Number}
+- [X] description: {type:String}
+- [X] image: {type:String}
+- [X] category: {type:String}
+- [X] company: {type:String}
+- [X] colors: {type:[]}
+- [X] featured: {type:Boolean}
+- [X] freeShipping: {type:Boolean}
+- [X] inventory:{type:Number}
+- [X] averageRating:{type:Number}
+- [X] user
+- [X] set timestamps
+- [X] export Product model
 
 #### Product Structure
 
-- [] add productController file in controllers
-- [] export (createProduct, getAllProducts,
+- [X] add productController file in controllers
+- [X] export (createProduct, getAllProducts,
   getSingleProduct, updateProduct, deleteProduct, uploadImage) functions
-- [] res.send('function name')
-- [] setup productRoutes file in routes
-- [] import all controllers
-- [] only getAllProducts and getSingleProduct accessible to public
-- [] rest only by admin (setup middlewares)
-- [] typical setup
-- [] router.route('/uploadImage').post(uploadImage)
-- [] import productRoutes as productRouter in the app.js
-- [] setup app.use('/api/v1/products', productRouter)
+- [X] res.send('function name')
+- [X] setup productRoutes file in routes
+- [X] import all controllers
+- [X] only getAllProducts and getSingleProduct accessible to public
+- [X] rest only by admin (setup middlewares)
+- [X] typical setup
+- [X] router.route('/uploadImage').post(uploadImage)
+- [X] import productRoutes as productRouter in the app.js
+- [X] setup app.use('/api/v1/products', productRouter)
 
 #### Product Routes in Postman
 
 #### Create Product
 
-- [] create user property on req.body and set it equal to userId (req.user)
-- [] pass req.body into Product.create
-- [] send back the product
+- [X] create user property on req.body and set it equal to userId (req.user)
+- [X] pass req.body into Product.create
+- [X] send back the product
 
 #### Remaining Controllers (apart from uploadImage)
 
-- [] getAllProducts
-- [] getSingleProduct
-- [] updateProduct
-- [] deleteProduct
-- [] typical CRUD, utilize (task or job) project
-- [] remember we check already for role 'admin'
+- [X] getAllProducts
+- [X] getSingleProduct
+- [X] updateProduct
+- [X] deleteProduct
+- [X] typical CRUD, utilize (task or job) project
+- [X] remember we check already for role 'admin'
 
 #### Upload Image
 
-- [] if some question, re-watch 07-file-upload
-- [] images folder with two images
+- [X] if some question, re-watch 07-file-upload
+- [X] images folder with two images
 
 #### Review Model
 
-- [] create Review.js in models folder
-- [] create Schema
-- [] rating : {type:Number}
-- [] title: {type:String}
-- [] comment: {type:String}
-- [] user
-- [] product
-- [] set timestamps
-- [] export Review model
+- [X] create Review.js in models folder
+- [X] create Schema
+- [X] rating : {type:Number}
+- [X] title: {type:String}
+- [X] comment: {type:String}
+- [X] user
+- [X] product
+- [X] set timestamps
+- [X] export Review model
 
 #### Review Structure
 
-- [] add reviewController file in controllers
-- [] export (createReview, getAllReviews, getSingleReview, updateReview, deleteReview) functions
-- [] res.send('function name')
-- [] setup reviewRoutes file in routes
-- [] import all controllers
-- [] only getAllReviews and getSingleReview accessible to public
-- [] rest only to users (setup middleware)
-- [] typical REST setup
-- [] import reviewRoutes as reviewRouter in the app.js
-- [] setup app.use('/api/v1/reviews', reviewRouter)
+- [X] add reviewController file in controllers
+- [X] export (createReview, getAllReviews, getSingleReview, updateReview, deleteReview) functions
+- [X] res.send('function name')
+- [X] setup reviewRoutes file in routes
+- [X] import all controllers
+- [X] only getAllReviews and getSingleReview accessible to public
+- [X] rest only to users (setup middleware)
+- [X] typical REST setup
+- [X] import reviewRoutes as reviewRouter in the app.js
+- [X] setup app.use('/api/v1/reviews', reviewRouter)
 
 #### Create Review
 
-- [] check for product in the req.body
-- [] attach user property (set it equal to req.user.userId) on to req.body
-- [] create review
-- [] don't test yet
+- [X] check for product in the req.body
+- [X] attach user property (set it equal to req.user.userId) on to req.body
+- [X] create review
+- [X] don't test yet
 
 #### Get All Reviews and Get Single Review
 
-- [] both public routes, typical setup
+- [X] both public routes, typical setup
 
 #### Delete Review
 
-- [] get id from req.params
-- [] check if review exists
-- [] if no review, 404
-- [] check permissions (req.user, review.user)
-- [] use await review.remove()
-- [] send back 200
+- [X] get id from req.params
+- [X] check if review exists
+- [X] if no review, 404
+- [X] check permissions (req.user, review.user)
+- [X] use await review.remove()
+- [X] send back 200
 
 #### Update Review
 
-- [] get id from req.params
-- [] get {rating, title comment} from req.body
-- [] check if review exists
-- [] if no review, 404
-- [] check permissions
-- [] set review properties equal to rating, title, comment
-- [] use await review.save()
-- [] send back 200
+- [X] get id from req.params
+- [X] get {rating, title comment} from req.body
+- [X] check if review exists
+- [X] if no review, 404
+- [X] check permissions
+- [X] set review properties equal to rating, title, comment
+- [X] use await review.save()
+- [X] send back 200
 
 #### Populate
 
