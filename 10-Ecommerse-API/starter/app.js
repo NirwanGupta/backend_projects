@@ -8,6 +8,12 @@ const morgan = require(`morgan`);
 const cookieParser = require(`cookie-parser`);  //  this middleware puts the cookie in the req
 const fileUpload = require('express-fileupload');
 
+const xss = require(`xss-clean`);
+const rateLimiter = require(`express-rate-limit`);
+const cors = require(`cors`);
+const helmet = require(`helmet`);
+const mongoSanitize = require(`express-mongo-sanitize`);
+
 const connectDB = require(`./db/connect`);
 const authRouter = require(`./router/authRouter`);
 const userRouter = require(`./router/userRoutes`);
@@ -18,22 +24,24 @@ const orderRouter = require(`./router/orderRouter`);
 const errorHandlerMiddleware = require(`./middleware/error-handler`);
 const notFoundMiddleware = require(`./middleware/not-found`);
 
-app.use(morgan(`tiny`));    //  useful to know at any call that which route we are heading
+app.use(
+    rateLimiter({
+        windowMs: 1000*60*15,
+        max: 60,
+    })
+);
+
+app.use(cors());
+app.use(helmet());
+app.use(mongoSanitize());
+app.use(xss());
+
+// app.use(morgan(`tiny`));    //  useful to know at any call that which route we are heading
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use(express.static(`./public`));
 app.use(fileUpload());
-
-app.get(`/`, (req, res) => {
-    res.send(`Home page`);
-})
-
-app.get(`/api/v1`, (req, res) => {
-    // console.log(req.cookies);    //  this works if cookie is not signed
-    console.log(req.signedCookies);     //  this works for signed cookie
-    res.send(`Home page /api/v1`);
-})
 
 app.use(`/api/v1/auth`, authRouter);
 app.use('/api/v1/users', userRouter);

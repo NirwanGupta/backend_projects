@@ -323,29 +323,29 @@
 
 #### Get All Orders and Get Single Order
 
-- [] getAllOrders - admin only
-- [] getSingleOrder - chechPermissions
+- [X] getAllOrders - admin only
+- [X] getSingleOrder - chechPermissions
 
 #### Get Current User Orders
 
-- [] find orders where user is equal to req.user.userId
+- [X] find orders where user is equal to req.user.userId
 
 #### Update Order
 
-- [] get order id
-- [] get paymentIntentId (req.body)
-- [] get order
-- [] if does not exist - 404
-- [] check permissions
-- [] set paymentIntentId and status as 'paid'
-- [] order.save()
+- [X] get order id
+- [X] get paymentIntentId (req.body)
+- [X] get order
+- [X] if does not exist - 404
+- [X] check permissions
+- [X] set paymentIntentId and status as 'paid'
+- [X] order.save()
 
 #### Create Docs
 
-- [] [Docgen Library] (https://github.com/thedevsaddam/docgen)
-- [] Export Postman Collection
-- [] docgen build -i fileName.json -o index.html
-- [] create index.html in public
+- [X] [Docgen Library] (https://github.com/thedevsaddam/docgen)
+- [X] Export Postman Collection
+- [X] docgen build -i fileName.json -o index.html
+- [X] create index.html in public
 
 #### Security Packages
 
