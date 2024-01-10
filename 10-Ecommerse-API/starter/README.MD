@@ -286,40 +286,40 @@
 
 #### Order Schema
 
-- [] create Order.js in models folder
-- [] create Schema
-- [] tax : {type:Number}
-- [] shippingFee: {type:Number}
-- [] subtotal: {type:Number}
-- [] total: {type:Number}
-- [] orderItems:[]
-- [] status:{type:String}
-- [] user
-- [] clientSecret:{type:String}
-- [] paymentId:{type:String}
-- [] set timestamps
-- [] export Order model
+- [x] create Order.js in models folder
+- [x] create Schema
+- [x] tax : {type:Number}
+- [x] shippingFee: {type:Number}
+- [x] subtotal: {type:Number}
+- [x] total: {type:Number}
+- [x] orderItems:[]
+- [x] status:{type:String}
+- [x] user
+- [x] clientSecret:{type:String}
+- [x] paymentId:{type:String}
+- [x] set timestamps
+- [x] export Order model
 
 #### Order Structure
 
-- [] add orderController file in controllers
-- [] export (getAllOrders, getSingleOrder, getCurrentUserOrders,
+- [X] add orderController file in controllers
+- [X] export (getAllOrders, getSingleOrder, getCurrentUserOrders,
   createOrder, updateOrder) functions
-- [] res.send('function name')
-- [] setup orderRoutes file in routes
-- [] import all controllers
-- [] authenticate user in all routes
-- [] getAllOrders admin only
-- [] typical REST setup
-- [] router.route('/showAllMyOrders').get(getCurrentUserOrders)
-- [] import orderRoutes as orderRouter in the app.js
-- [] setup app.use('/api/v1/orders', orderRouter)
+- [X] res.send('function name')
+- [X] setup orderRoutes file in routes
+- [X] import all controllers
+- [X] authenticate user in all routes
+- [X] getAllOrders admin only
+- [X] typical REST setup
+- [X] router.route('/showAllMyOrders').get(getCurrentUserOrders)
+- [X] import orderRoutes as orderRouter in the app.js
+- [X] setup app.use('/api/v1/orders', orderRouter)
 
 #### Order in Postman
 
 #### Create Order
 
-- [] most complex
+- [X] most complex
 
 #### Get All Orders and Get Single Order
 
