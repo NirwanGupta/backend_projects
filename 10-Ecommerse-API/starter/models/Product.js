@@ -11,12 +11,11 @@ const ProductSchema = new mongoose.Schema(
         price: {
             type: Number,
             required: [true, 'Please provide product price'],
-            default: 0,
         },
         description: {
             type: String,
             required: [true, 'Please provide product description'],
-            maxlength: [1000, 'description can not be more than 100 characters'],
+            maxlength: [1000, 'description can not be more than 1000 characters'],
         },
         image: {
             type: String,
@@ -42,11 +41,11 @@ const ProductSchema = new mongoose.Schema(
         },
         featured: {
             type: Boolean,
-            required: false,
+            default: false,
         },
         freeShipping: {
             type: Boolean,
-            required: false,
+            default: false,
         },
         inventory: {
             type: Number,

@@ -32,7 +32,7 @@ const login = async (req, res) => {
         throw new customError.BadRequestError(`Please provide email and password`);
     }
 
-    console.log(password);
+    // console.log(password);
 
     const user = await User.findOne({ email });
     if(!user) {
@@ -40,7 +40,7 @@ const login = async (req, res) => {
     }
 
     const isPasswordCorrect = await user.comparePassword(password);
-    console.log(isPasswordCorrect);
+    // console.log(isPasswordCorrect);
     if(!isPasswordCorrect) {
         throw new customError.UnauthenticatedError(`Wrong password`);
     }

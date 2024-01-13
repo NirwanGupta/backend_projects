@@ -47,7 +47,7 @@ const attachCookiesToResponse = ({res,user})=>{
         httpOnly:true,
         expires: new Date(Date.now()+oneDay),
         secure : process.env.NODE_ENV==='production',
-        signed:true,// to check that the user can not manually modify the cookie in the browser, so we send it signed with some value in cookieParser
+        signed: true,    // to check that the user can not manually modify the cookie in the browser, so we send it signed with some value in cookieParser
     })
 }
 

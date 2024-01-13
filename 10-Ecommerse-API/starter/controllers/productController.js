@@ -11,7 +11,7 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-    //  i want to get all the reviews that are related to my product, but we cannot use .populate method because in our productModel we have no property named review that has a reference to the Review model
+    //  i want to get all the reviews that are related to my product, but we cannot use .populate directly method because in our productModel we have no property named review that has a reference to the Review model
     //  thus for this we have one way called mongoose virtuals
 
     //  first we have to set that our product model accept virtuals

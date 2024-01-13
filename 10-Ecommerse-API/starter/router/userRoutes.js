@@ -7,7 +7,7 @@ const {
     getSingleUser,
     showCurrentUser,
     updateUser,
-    updateUserPassword,
+    updateUserPassword, 
 } = require(`../controllers/userController`);
 
 router.route('/').get(authenticateUser, authorisePermission('admin'), getAllUser);

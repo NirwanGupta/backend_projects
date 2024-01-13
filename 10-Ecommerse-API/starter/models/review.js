@@ -19,7 +19,7 @@ const ReviewSchema = mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.ObjectId,
-        re: 'User',
+        ref: 'User',
         required: true,
     },
     product: {
@@ -31,6 +31,8 @@ const ReviewSchema = mongoose.Schema({
 
 //  now i want the each user sends only one review per product => thus i need indexing for the reviews -> thus same index for both user and products
 ReviewSchema.index({ product: 1, user: 1 }, {unique: true});
+//  per user, per product -> unique true for reviews.
+
 
 //  static and not methods because i want to call the method on the schema and not on the instance
 //  this can also be done in a hardcoded way in the mongoDb aggregate GUI
@@ -46,7 +48,7 @@ ReviewSchema.statics.calculateAverageRating = async function (productId) {
       },
     ]);
 
-    console.log(result);
+    // console.log(result);
   
     try {
       await this.model('Product').findOneAndUpdate(
