@@ -349,28 +349,28 @@
 
 #### Security Packages
 
-- [] express-rate-limiter
-- [] helmet
-- [] xss-clean
-- [] express-mongo-sanitize
-- [] cors (cookies!!!!)
+- [X] express-rate-limiter
+- [X] helmet
+- [X] xss-clean
+- [X] express-mongo-sanitize
+- [X] cors (cookies!!!!)
 
 #### Deploy on Heroku
 
-- [] heroku account and heroku cli
-- [] remove/copy from the main repo
-- [] add dev command "nodemon app.js"
-- [] change start to "node app.js"
-- [] setup node version in package.json
-- [] "engines": {"node": "14.x"}
-- [] Procfile "web: node app.js"
-- [] remove existing git repo
-- [] rm -rf .git - mac,
-- [] git init
-- [] git add .
-- [] git commit -m "initial commit"
-- [] heroku login
-- [] heroku create "App Name"
-- [] git remote -v
-- [] setup env vars in GUI
-- [] git push heroku master/main
+- [X] heroku account and heroku cli
+- [X] remove/copy from the main repo
+- [X] add dev command "nodemon app.js"
+- [X] change start to "node app.js"
+- [X] setup node version in package.json
+- [X] "engines": {"node": "14.x"}
+- [X] Procfile "web: node app.js"
+- [X] remove existing git repo
+- [X] rm -rf .git - mac,
+- [X] git init
+- [X] git add .
+- [X] git commit -m "initial commit"
+- [X] heroku login
+- [X] heroku create "App Name"
+- [X] git remote -v
+- [X] setup env vars in GUI
+- [X] git push heroku master/main
