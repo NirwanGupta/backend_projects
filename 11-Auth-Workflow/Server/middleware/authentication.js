@@ -1,20 +1,37 @@
 const { custom } = require("joi");
 const customError = require(`../errors`);
 const {isTokenValid} = require(`../utils`);
+const Token = require(`../models/token`);
+const {attachCookiesToResponse} = require(`../utils`);
 
 const authenticateUser = async (req, res, next) => {
-    const token = req.signedCookies.token;
-    
-    if(!token) {
-        throw new customError.UnauthenticatedError(`Authentication Invalid`);
-    }
+    const { refreshToken, accessToken } = req.signedCookies;
 
     try {
-        // const payload = isTokenValid({token});   //  we can do this way as well
-        const {name, userId, role} = isTokenValid({token});
-        req.user = {name, userId, role};
-        // console.log(req.user);
+        if(accessToken) {
+            const payload = isTokenValid(accessToken);
+            // console.log(payload.user);
+            req.user = payload.user;
+            return next();
+        }
+        //  this means that the accessToken had already expired and thus now we are going to check for the refreshToken
+
+        const payload = isTokenValid(refreshToken);
+
+        const existingToken = await Token.findOne({
+            user: payload.user.userId,
+            refreshToken: payload.refreshToken,
+        });
+
+        if(!existingToken || !existingToken?.isValid) {  //  the refreshToken also expired or the isValid of the refreshToken was set false by the admin intentionally
+            throw new customError.UnauthenticatedError(`Authentication Invalid`);
+        }
+
+        attachCookiesToResponse({ res, user: payload.user, refreshToken: existingToken.refreshToken });
+
+        req.user = payload.user;
         next();
+
     } catch (error) {
         throw new customError.UnauthenticatedError(`Authentication Invalid`);
     }

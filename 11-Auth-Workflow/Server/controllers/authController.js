@@ -1,5 +1,6 @@
 require(`dotenv`).config();
 const User = require(`../models/user`);
+const Token = require(`../models/token`);
 const {StatusCodes} = require(`http-status-codes`);
 const customError = require(`../errors`);
 const jwt = require(`jsonwebtoken`);
@@ -91,9 +92,31 @@ const login = async (req, res) => {
     }
 
     const tokenUser = createTokenUser(user);
-    attachCookiesToResponse({res,user : tokenUser});
+    //create refresh token
+    let refreshToken ='';
 
-    res.status(StatusCodes.OK).json({user: tokenUser});
+    //  check for existing token
+    const existingToken = await Token.findOne({ user: user._id });
+    if(existingToken) { //  this is done in order to ensure that if a user login multiple times, the token is not stored in the dataBase everyTime. If he has logged in once and the token is still alive then use that token to login 
+        const {isValid} = existingToken;
+        if(!isValid) {  //  if the user is doing something that i strictly doesnot want him to do, somehow i create the isValid to false and thus we throw the following error and ensure that the user will not be able to login
+            throw new customError.UnauthenticatedError(`Your account has been banned`);
+        }
+        refreshToken = existingToken.refreshToken;
+        attachCookiesToResponse({res, user: tokenUser, refreshToken});
+        res.status(StatusCodes.OK).json({ user: tokenUser });
+        return;
+    }
+
+    refreshToken = crypto.randomBytes(40).toString('hex');
+    const userAgent = req.headers['user-agent'];
+    const ip = req.ip;
+    const userToken = { refreshToken, ip, userAgent, user:user._id };
+
+    await Token.create(userToken);
+
+    attachCookiesToResponse({res, user:tokenUser, refreshToken});
+    res.status(StatusCodes.OK).json({ user : tokenUser });
 }
 
 const logout = async (req, res) => {

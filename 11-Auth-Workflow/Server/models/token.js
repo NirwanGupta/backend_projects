@@ -15,7 +15,7 @@ const tokenSchema = new mongoose.Schema({
     },
     isValid: {
         type:Boolean,
-        default: truw,
+        default: true,
     },
     user: {
         type: mongoose.Schema.ObjectId,
