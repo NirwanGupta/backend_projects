@@ -46,17 +46,17 @@
 
 #### Send Verification Link
 
-- [] refactor sendEmail
-- [] setup sendVerificationEmail.js
-- [] pass arguments
+- [X] refactor sendEmail
+- [X] setup sendVerificationEmail.js
+- [X] pass arguments
 
 #### Token Model
 
-- [] create Token.js in models
-- [] refreshToken,ip,userAgent - all String and required
-- [] isValid - Boolean, default:true
-- [] ref user
-- [] timestamps true
+- [X] create Token.js in models
+- [X] refreshToken,ip,userAgent - all String and required
+- [X] isValid - Boolean, default:true
+- [X] ref user
+- [X] timestamps true
 
 #### Setup Token in Login Controller
 
@@ -70,13 +70,13 @@
 
 #### Forgot/Reset Password Functionality
 
-- User Model
-- passwordToken {type:String}
-- passwordTokenExpirationDate {type:Date}
-- authController
-- forgotPassword and resetPassword
-- authRoutes
-- post '/forgot-password' '/reset-password'
+- [] User Model
+- [] passwordToken {type:String}
+- [] passwordTokenExpirationDate {type:Date}
+- [] authController
+- [] forgotPassword and resetPassword
+- [] authRoutes
+- [] post '/forgot-password' '/reset-password'
 
 #### Forgot Password Controller
 

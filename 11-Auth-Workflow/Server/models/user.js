@@ -1,6 +1,7 @@
 const mongoose = require(`mongoose`);
 const validator = require(`validator`); //  if we use this package we donot need match to validate the email
 const bcrypt = require(`bcryptjs`);
+const { string } = require("joi");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -40,6 +41,12 @@ const userSchema = new mongoose.Schema({
         default: false,
     },
     verified: Date,
+    passwordToken: {
+        type: String,
+    },
+    passwordTokenExpirationDate: {
+        type: Date,
+    },
 });
 
 //  this.isModifiedPaths() returns an array of all the paths that were mofified

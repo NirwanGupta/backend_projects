@@ -4,9 +4,16 @@ const Token = require(`../models/token`);
 const {StatusCodes} = require(`http-status-codes`);
 const customError = require(`../errors`);
 const jwt = require(`jsonwebtoken`);
-const {attachCookiesToResponse, createTokenUser, sendVerificationEmail} = require(`../utils`);
+const {
+    attachCookiesToResponse, 
+    createTokenUser, 
+    sendVerificationEmail, 
+    sendResetPasswordEmail, 
+    createHash,
+} = require(`../utils`);
 
 const crypto = require(`crypto`);
+const { custom } = require("joi");
 
 const register = async (req, res) => {
     
@@ -120,16 +127,78 @@ const login = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-    res.cookie(`token`, 'logout', {
+    await Token.findOneAndDelete({ user: req.user.userId });
+
+    res.cookie(`accessToken`, 'AccessTokenLogout', {
         httpOnly: true,
         expires: new Date(Date.now() /*+ 5*1000*/),
     })
+
+    res.cookie(`refreshToken`, 'RefreshTokenLogout', {
+        httpOnly: true,
+        expires: new Date(Date.now() /*+ 5*1000*/),
+    })
+
     res.status(StatusCodes.OK).json({msg: 'user logged out'});
+}
+
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    if(!email) {
+        throw new customError.BadRequestError(`Please provide email ID`);
+    }
+    const user = await User.findOne({email});
+    //  i donot want to throw an error if the email is not present in my database, becaue if i do so attackers can know what email i have in my dataBase
+    if(user) {
+        //  i want to create a token that has an expiry date in 10 minutes so that the user cannot use the reset password link for more than 10 minutes
+        const passwordToken = crypto.randomBytes(70).toString(`hex`);
+
+        //  send email
+        const origin = `http://localhost:3000`;
+        await sendResetPasswordEmail({name: user.name, email: user.email, token: passwordToken, origin});
+
+        const tenMinutes = 1000*60*10;
+        const passwordTokenExpirationDate = new Date(Date.now()+tenMinutes);
+
+        user.passwordToken = createHash(passwordToken);
+        user.passwordTokenExpirationDate = passwordTokenExpirationDate;
+
+        await user.save();
+    }
+    res.status(StatusCodes.OK).json({msg: `Please check your email for reset password link`});
+}
+
+const resetPassword = async (req, res) => {
+    const {email, token, password} = req.body;  //  email and token are passed as query strings and they are set to the req.body through frontend
+    if(!email || !token || !password) {
+        throw new customError.BadRequestError(`Please provide all the values`);
+    }
+    const user = await User.findOne({email});
+    //  even if the email doesnot exist we need to send 200 so that attacker doesnot know what emails i have in my database
+    if(user) {
+        const currentDate = new Date();
+
+        // console.log('Expiration Time:', user.passwordTokenExpirationDate);
+        // console.log('Current Time:', currentDate);
+        // console.log('user.passwordToken: ', user.passwordToken);
+        // console.log('token: ', token);
+
+        if(user.passwordToken === createHash(token) && user.passwordTokenExpirationDate > currentDate) {
+            user.password = password;
+            user.passwordToken = null;
+            user.passwordTokenExpirationDate = null;
+            // console.log('New password is: ', user.password, "\nthe password entered was: ",password);
+            await user.save();
+        }
+    }
+    res.status(StatusCodes.OK).json({msg: 'Password changed successfully'});
 }
 
 module.exports = {
     register,
     login,
     logout,
-    verifyEmail
+    verifyEmail,
+    forgotPassword,
+    resetPassword,
 };

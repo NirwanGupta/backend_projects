@@ -18,6 +18,7 @@ const attachCookiesToResponse = ({res, user, refreshToken})=>{
     // console.log(user);
 
     const oneDay = 1000*60*60*24;
+    const thirtyDays = 1000*60*60*24*30;
     //  const fiveSeconds = 1000*5;
 
     res.cookie('accessToken',accessTokenJWT,{
@@ -25,12 +26,12 @@ const attachCookiesToResponse = ({res, user, refreshToken})=>{
         // expires: new Date(Date.now()+oneDay),
         secure : process.env.NODE_ENV === 'production',
         signed: true,    // to check that the user can not manually modify the cookie in the browser, so we send it signed with some value in cookieParser
-        maxAge: 1000,   //  15 minutes
+        expires: new Date(Date.now() + oneDay),
     });
 
     res.cookie(`refreshToken`, refreshTokenJWT, {
         httpOnly: true,
-        expiresIn: new Date(Date.now() + oneDay),
+        expires: new Date(Date.now() + thirtyDays),
         secure: process.env.NODE_ENV === 'production',
         signed: true,
     });
